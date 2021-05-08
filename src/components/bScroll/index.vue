@@ -1,0 +1,114 @@
+<template>
+	 <div class="wrappers" ref="wrapper">
+	   <ul class="content" >
+	 	  <slot></slot>
+	   </ul>
+	 </div>
+</template>
+<script>
+	 import BScroll from "better-scroll"
+	  export default{
+         name:"bscroll",
+         data(){
+              return {
+              	bscroll:{}
+              }
+         },
+         props:{
+         	data:{
+         		type:Array,
+         		default(){
+         			return[]		
+         		}
+         	},
+         	beforeScroll:{
+                  type:Boolean,
+                  default:true,
+         	},
+         	listenScroll:{
+         		type:Boolean,
+         		default:true,
+         	},
+         	pullUp:{
+         		type:Boolean,
+         		default:true,
+         	},
+         	scrollY:{
+              type:Boolean,
+              default:true,
+         	},
+         	scrollX:{
+              type:Boolean,
+              default:false,
+         	},
+         	probeType:{
+         	    type:Number,
+         	    dafault:3,
+         	},
+         	click:{
+         		type:Boolean,
+         		default:true,
+         	},
+
+         },
+         methods:{
+           initScroll(){
+         		 console.log("init..")
+               this.bscroll= new BScroll(this.$refs.wrapper,{
+                      click:this.click,
+                      scrollY:this.scrollY,
+                      pullUpLoad:this.pullUp,
+                      probeType:this.probeType,
+                 })
+              if(this.listenScroll){
+                    this.bscroll.on("scroll",(pos)=>{
+                    	this.$emit("scroll",pos)
+                    })
+              }
+              if(this.pullUp){
+              	  this.bscroll.on("pullingUp",()=>{
+                       this.$emit("scrollEnd")
+              	 })
+              }
+              if(this.beforeScroll){
+                 this.bscroll.on("beforeScrollStart",()=>{
+                 	this.$emit("beforeScroll")
+                 })
+              }
+         	},
+          refresh(){
+          	 this.bscroll&&this.bscroll.refresh()
+          },
+          finishPullUp(){
+          	this.bscroll&&this.bscroll.finishPullUp()
+          },
+          disable(){
+          	this.bscroll&&this.bscroll.disable()
+          },
+          enable(){
+          	this.bscroll&&this.bscroll.enable()
+          },
+          scrollTo(x,y,dur){
+          	this.bscroll&&this.bscroll.scrollTo.call(this.bscroll,x,y,dur)
+          },
+          scrollEle(el,dur){
+          	this.bscroll&&this.bscroll.scrollToElement.call(this.bscroll,el,dur)
+          }
+         },
+         mounted(){
+         	this.$nextTick(()=>{
+                   this.initScroll()
+         	  })
+         },
+         watch:{
+         	data(){
+         		setTimeout(()=>{
+                   this.refresh()
+         		},20)
+         	}
+         }
+
+	  }
+</script>
+<style scoped>
+</style>

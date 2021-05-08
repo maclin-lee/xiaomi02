@@ -1,28 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  	    <div class="con" v-if="isLoad">
+  	    	 <keep-alive>
+  	    	 	<router-view></router-view>
+  	    	 </keep-alive>	 
+  	    </div>
+  	    <Loading v-else ></Loading>
+        
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import "assets/css/base.css"
+import "assets/css/iconfont.css"
+import Loading from  "components/Loading"
 export default {
   name: 'app',
   components: {
-    HelloWorld
+  	 Loading, 
+  },
+  data(){
+  	 return {
+  	 	isLoad:false,
+  	 }
+  },
+  mounted(){
+  	setTimeout(()=>{
+          this.isLoad=true
+  	},1000)
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

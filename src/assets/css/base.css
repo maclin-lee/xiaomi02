@@ -1,0 +1,26 @@
+@import "./normalize.css"
+html{
+   font-size: 16px;
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+ul,li{
+	list-style: none;
+}
+.clearfix:after,.clearfix:before{
+   clear: both;
+   display: block;
+   height: 0;
+   content: "";
+   visibility: hidden;
+   width: 0;
+
+}
+a{
+	text-decoration: none;
+}
+a:hover{
+	color:red;
+}
